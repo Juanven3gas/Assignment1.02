@@ -7,6 +7,7 @@ int main (int argc, char * argv[])
     int flag_save = 0;
     int flag_load = 0;
     int arguement_index = 1;
+    char *filePath;
 
     if(argc <= 1)
     {
@@ -38,11 +39,18 @@ int main (int argc, char * argv[])
     else if(flag_load)
     {
         //TODO
+        filePath = getenv("HOME");
+        strcat(filePath, ".rlg327/dungeon");
+        printf("filepath: %s\n", filePath);
         printf("Program will only load\n");
     }
     else if(flag_save)
     {
         //TODO
+
+        filePath = getenv("HOME");
+        strcat(filePath, ".rlg327/dungeon");
+        printf("filepath: %s\n", filePath);
         printf("Program will only save\n");
     }
     else 
