@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "dun_utils.h"
 
 int main (int argc, char * argv[])
 {
@@ -9,7 +10,7 @@ int main (int argc, char * argv[])
     int arguement_index = 1;
     char *filePath;
 
-    if(argc <= 1)
+    if(argc < 1)
     {
         printf("Incorrect amount of arguements\n");
         return 1;
@@ -55,9 +56,10 @@ int main (int argc, char * argv[])
     }
     else 
     {
-        //TODO
-        printf("Incorrect parameters. Program exitting\n");
-        return 1;   
+        //Execute the default behavior
+        //Gen a dungeon, display & exit
+        gen_dun();
+
     }
 
     return 0;
