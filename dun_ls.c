@@ -28,7 +28,12 @@ int main (int argc, char * argv[])
         {
             flag_save = 1;
         }
-
+        else
+        {
+            printf("Incorrect parameter detected: %s\n", argv[arguement_index]);
+            return 1;
+        }
+        
         arguement_index++;
     }
     
@@ -59,7 +64,7 @@ int main (int argc, char * argv[])
         //Execute the default behavior
         //Gen a dungeon, display & exit
         gen_dun();
-
+        return 0;
     }
 
     return 0;
