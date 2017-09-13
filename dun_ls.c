@@ -47,10 +47,9 @@ int main (int argc, char * argv[])
     else if(flag_load)
     {
         //TODO
-        printf("Program will only load\n");
         int length = strlen(home) + strlen("/.rlg327/dungeon") + 1;
         char * path;
-        char * buffer;
+        unsigned char * buffer;
         int f_size;
         size_t result;
 
@@ -71,7 +70,7 @@ int main (int argc, char * argv[])
         rewind(f);
 
         //allocate memory to contain whole file
-        buffer = (char*) malloc (sizeof(char)*f_size);
+        buffer = (unsigned char*) malloc (sizeof(unsigned char)*f_size);
         if(buffer == NULL)
         {
             fputs("Memory error", stderr);
@@ -87,7 +86,10 @@ int main (int argc, char * argv[])
         }
         
         
-        printf("size of file: %d & calc size: %d\n", f_size, num);
+        printf("size of file: %d\n", f_size);
+        printf("byte[10]: %u, byte[11]: %u, byte[12]: %u, byte[13]: %u\n", (unsigned int)buffer[10], (unsigned int)buffer[11], (unsigned int)buffer[12], (unsigned int)buffer[13]);
+        unsigned int b4 = (buffer[10] << 24) + (buffer[11] << 12) + (buffer[12] << 8) + (buffer[13]);
+        printf("num : %u\n", b4);
         free(path);
         free(buffer);
         fclose(f);
