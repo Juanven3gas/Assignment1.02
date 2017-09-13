@@ -1,0 +1,41 @@
+char * home = getenv("HOME);
+int length;
+length = strlen(home) + strlen("/.rlg327/dungeon") + 1;
+char * path;
+path = malloc(length);
+strcpy (path, home);
+strcat (path, "/.rlg327/dungeon");
+FILE *f;
+f = fopen(path, "r");
+free(path);
+fclose(f);
+
+low bytes come first -> little endian
+high bytes come first -> big endian <- network order
+
+int j = 5; //32 bits = 4 bytes (8 bits per byte)
+          // little endian j: 00000101 00000000 00000000 00000000
+          // big endian    j: 00000000 00000000 00000000 00000101
+
+          int htobe32(int); <- writting to a file
+          int be32toh(int); <- reading from a file
+          version & size need to be converted for assignment
+
+          int betemp = htobe32(size);
+          fwrite(&size, 1, 4 f);
+
+struct 
+{
+   char semantic[7]; //should be a 6
+   int version;
+   int size;
+   char hardness[21][80];
+} s;
+
+//struct are not neccesaarily packed
+//try not to write structs
+
+fwrite(&s, sizeof(s), 1, f);
+
+//0 room or corridor
+//255 is edge or rock
