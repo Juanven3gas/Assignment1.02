@@ -4,6 +4,7 @@
 #include <endian.h>
 #include "dun_utils.h"
 
+
 int main (int argc, char * argv[])
 {
     int flag_save = 0;
@@ -46,7 +47,6 @@ int main (int argc, char * argv[])
     }
     else if(flag_load)
     {
-        //TODO
         int length = strlen(home) + strlen("/.rlg327/dungeon") + 1;
         char * path;
         unsigned char * buffer;
@@ -85,12 +85,60 @@ int main (int argc, char * argv[])
             exit (3);
         }
         
+        free(path);
         
         printf("size of file: %d\n", f_size);
         printf("byte[10]: %u, byte[11]: %u, byte[12]: %u, byte[13]: %u\n", (unsigned int)buffer[10], (unsigned int)buffer[11], (unsigned int)buffer[12], (unsigned int)buffer[13]);
         unsigned int b4 = (buffer[10] << 24) + (buffer[11] << 12) + (buffer[12] << 8) + (buffer[13]);
         printf("num : %u\n", b4);
-        free(path);
+        
+        //figure out how to do hardness in order to find corridors
+
+        //figure out the rooms
+        int start;
+        int i, j;        
+        char dungeon[21][80];
+        
+
+        for(i = 0; i < 21; i++)
+        {
+            for(j = 0; j < 80; j++)
+            {
+                dungeon[i][j] = ' ';
+            }
+        }
+
+        for(start = 1694; start < f_size; start++)
+        {
+
+            unsigned int roomy = (unsigned int)buffer[start];
+            unsigned int roomx = (unsigned int)buffer[++start];
+            unsigned int roomRow = (unsigned int)buffer[++start];
+            unsigned int roomCol = (unsigned int)buffer[++start];
+
+            printf("room y position: %2u,room x position: %2u, room rows: %2u, room cols: %2u\n", roomy, roomx, roomRow, roomCol);
+            
+            int row, col;
+            for(row = roomy; row < (roomy + roomCol); row++)
+            {
+                for(col = roomx; col < (roomx + roomRow); col++)
+                {
+                    dungeon[row][col] = '.';
+                }
+            }
+        }
+
+
+        for(i = 0; i < 21; i++)
+        {
+            for(j = 0; j < 80; j++)
+            {
+                printf("%c", dungeon[i][j]);
+            }
+
+            printf("\n");
+        }
+
         free(buffer);
         fclose(f);
     }
